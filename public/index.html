@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trade Shop – Your Mates Brewing</title>
+<meta name="description" content="The Your Mates Brewing trade shop for community groups, clubs, schools and short-stay hosts on the Sunshine Coast.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#333333">
+<link rel="icon" href="https://cdn.shopify.com/s/files/1/0454/1949/5576/files/Brand_Full_Colour_Logo_1_2x_bc9bb534-0895-4f04-b314-13a297f864c2.png?width=64">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bayon&family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/css/site.css">
+<style>
+/* ---------- Auth ---------- */
+.auth { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; padding-block: 40px 20px; }
+@media (max-width: 860px) { .auth { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 24px; } }
+.pitch h1 { font-size: clamp(36px, 6vw, 60px); }
+.pitch .lede { font-size: 17px; max-width: 46ch; margin: 14px 0 22px; }
+.perks { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 12px; }
+.perks li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+.perks .ico { width: 34px; height: 34px; border-radius: 50%; background: var(--yellow); border: 2px solid var(--black); display: grid; place-items: center; font: 17px/1 var(--display); }
+.perks b { display: block; font-weight: 700; }
+.can-row { display: flex; gap: 10px; margin-top: 6px; }
+.can-row img { width: 25%; aspect-ratio: 1; object-fit: cover; border: 2px solid var(--black); border-radius: var(--r); background: var(--card); }
+.auth-card .tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--black); margin: -22px -22px 20px; }
+.auth-card .tabs button { background: var(--card); border: 0; padding: 14px 10px 11px; font: 20px/1 var(--display); text-transform: uppercase; cursor: pointer; border-radius: 0; }
+.auth-card .tabs button:first-child { border-top-left-radius: 8px; border-right: 2px solid var(--black); }
+.auth-card .tabs button:last-child { border-top-right-radius: 8px; }
+.auth-card .tabs button[aria-selected="true"] { background: var(--yellow); }
+.auth-card form { display: grid; gap: 12px; }
+.auth-card .sub-h { font: 17px/1 var(--display); text-transform: uppercase; margin: 6px 0 -2px; color: var(--muted); }
+
+/* ---------- Shop ---------- */
+.hello { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-block: 28px 6px; }
+.hello p { margin: 6px 0 0; color: var(--muted); }
+.tier { display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--black); border-radius: 999px; padding: 6px 14px 4px; background: var(--yellow); font: 18px/1 var(--display); text-transform: uppercase; }
+.steps { display: flex; gap: 8px; list-style: none; padding: 0; margin: 18px 0 22px; flex-wrap: wrap; font: 16px/1 var(--display); text-transform: uppercase; color: var(--muted); }
+.steps li { display: flex; align-items: center; gap: 8px; }
+.steps li + li::before { content: ""; width: 22px; height: 2px; background: var(--line); }
+.steps .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 14px; padding-top: 2px; }
+.steps .is-on { color: var(--black); } .steps .is-on .dot { background: var(--yellow); border-color: var(--black); }
+@media (max-width: 560px) { .steps { font-size: 14px; gap: 6px; } .steps li + li::before { width: 10px; } .steps li:not(.is-on) .lbl { display: none; } }
+.steps .is-done { color: var(--black); } .steps .is-done .dot { background: var(--black); border-color: var(--black); color: #fff; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 28px; align-items: start; }
+@media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+.sec-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 6px 0 14px; }
+.sec-h span { color: var(--muted); font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-bottom: 34px; }
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .grid { gap: 12px; } }
+.card { background: var(--card); border: 2px solid var(--black); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+.card .img { aspect-ratio: 1; background: #ddd; border-bottom: 2px solid var(--black); position: relative; }
+.card .img img { width: 100%; height: 100%; object-fit: cover; }
+.card .badge { position: absolute; top: 10px; left: 10px; background: var(--yellow); color: var(--black); border-radius: 999px; padding: 4px 10px 2px; font: 14px/1 var(--display); text-transform: uppercase; border: 1.5px solid var(--black); }
+.card .body { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.card .t { font: 21px/1.05 var(--display); text-transform: uppercase; }
+.card .meta { font-size: 13px; color: var(--muted); }
+.card .pr { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.card .yours { font-weight: 700; font-size: 18px; }
+.card .was { font-size: 13px; color: var(--muted); text-decoration: line-through; }
+.card .foot { margin-top: auto; padding-top: 10px; }
+.qty { display: grid; grid-template-columns: 40px 1fr 40px; border: 2px solid var(--black); border-radius: var(--r); overflow: hidden; background: #fff; height: 42px; }
+.qty button { border: 0; background: var(--yellow); font: 22px/1 var(--display); cursor: pointer; }
+.qty button:disabled { background: #eee; color: #aaa; cursor: default; }
+.qty input { border: 0; border-radius: 0; text-align: center; padding: 0; font-weight: 700; height: 100%; -moz-appearance: textfield; }
+.qty input::-webkit-outer-spin-button, .qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.qty input:focus { box-shadow: none; background: #fffde0; }
+.add { width: 100%; height: 42px; }
+.limit { font-size: 12px; color: var(--warn); font-weight: 700; }
+
+.summary { position: sticky; top: 104px; }
+@media (max-width: 960px) { .summary { position: static; } }
+.summary h3 { margin-bottom: 12px; }
+.lines { display: grid; gap: 7px; font-size: 14px; }
+.line { display: flex; justify-content: space-between; gap: 12px; }
+.line .l { color: var(--muted); min-width: 0; }
+.line.total { border-top: 2px solid var(--black); padding-top: 10px; margin-top: 6px; font-weight: 700; font-size: 18px; }
+.line.total .l { color: var(--ink); }
+.summary .btn { margin-top: 16px; }
+.summary .hint { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+
+.mbar { display: none; }
+@media (max-width: 960px) {
+  .mbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; background: var(--charcoal); color: #fff; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px max(16px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  .mbar b { font-size: 18px; }
+  body.has-mbar { padding-bottom: 76px; }
+}
+
+/* ---------- Checkout ---------- */
+.choice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 6px 0 18px; }
+@media (max-width: 520px) { .choice { grid-template-columns: minmax(0, 1fr); } }
+.opt { border: 2px solid var(--line); background: #fff; border-radius: var(--r); padding: 14px; text-align: left; cursor: pointer; display: grid; gap: 3px; }
+.opt b { font: 22px/1 var(--display); text-transform: uppercase; }
+.opt span { font-size: 13px; color: var(--muted); }
+.opt[aria-pressed="true"] { border-color: var(--black); background: #fffde0; box-shadow: inset 0 0 0 1px var(--black); }
+.lab { font: 17px/1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 20px 0 9px; display: block; }
+.lab .opt-tag { font: 400 13px var(--body); text-transform: none; color: var(--muted); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { border: 2px solid var(--line); background: #fff; border-radius: var(--r); padding: 8px 13px; cursor: pointer; font-weight: 700; font-size: 14px; text-align: center; min-width: 68px; }
+.chip small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.chip[aria-pressed="true"] { border-color: var(--black); background: var(--yellow); }
+.chip[aria-pressed="true"] small { color: var(--black); }
+.radios { display: grid; gap: 8px; }
+.radio { display: flex; gap: 10px; align-items: flex-start; padding: 11px 12px; border: 2px solid var(--line); border-radius: var(--r); cursor: pointer; background: #fff; }
+.radio:has(input:checked) { border-color: var(--black); background: #fffde0; }
+.radio input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--black); flex: none; }
+.radio b { display: block; font-size: 14px; }
+.radio small { display: block; font-size: 13px; color: var(--muted); }
+.panel .note { margin-top: 12px; }
+.back { margin-top: 14px; }
+#sumup-card { min-height: 260px; margin-top: 12px; }
+.secure { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); margin-top: 12px; }
+
+/* ---------- Done / account ---------- */
+.done-panel { max-width: 680px; margin: 30px auto 0; }
+.done-panel .tick { width: 56px; height: 56px; border-radius: 50%; background: var(--yellow); border: 2px solid var(--black); display: grid; place-items: center; font: 30px/1 var(--display); margin-bottom: 14px; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 7px 18px; margin: 18px 0; font-size: 14px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+.acct { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: start; padding-top: 26px; }
+@media (max-width: 860px) { .acct { grid-template-columns: minmax(0, 1fr); } }
+.olist { display: grid; gap: 12px; }
+.orow { border: 2px solid var(--black); border-radius: var(--r); padding: 14px; display: grid; gap: 6px; background: #fff; }
+.orow .top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; }
+.orow .top b { font: 20px/1 var(--display); text-transform: uppercase; }
+.loading { display: flex; align-items: center; gap: 12px; padding: 60px 0; justify-content: center; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="announce">Trade shop · Community groups, clubs, schools &amp; short-stay hosts</div>
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="https://yourmatesbrewing.com/">Main site</a>
+    </nav>
+    <a class="logo" href="/" aria-label="Your Mates Brewing trade shop home">
+      <img src="https://cdn.shopify.com/s/files/1/0454/1949/5576/files/Brand_Full_Colour_Logo_1_2x_bc9bb534-0895-4f04-b314-13a297f864c2.png?height=160" alt="Your Mates Brewing Co." width="64" height="64">
+    </a>
+    <div class="head-right" id="headRight"></div>
+  </div>
+</header>
+
+<main id="app"><div class="loading"><span class="spinner"></span>Loading the trade shop…</div></main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><p class="tagline">Good beer. Good mates. Good times.</p><p class="small" style="margin-top:10px">Your Mates Brewing Co.<br>Warana, Sunshine Coast</p></div>
+    <div><h3>Trade orders</h3><p>Email <a href="mailto:sales@yourmatesbrewing.com">sales@yourmatesbrewing.com</a></p><p>Call (07) 5329 4733</p></div>
+    <div><h3>Pickup</h3><p>41 Technology Drive<br>Warana QLD 4575</p></div>
+    <div><h3>Drink responsibly</h3><p class="small">It is against the law to sell or supply alcohol to, or to obtain alcohol on behalf of, a person under the age of 18 years.</p></div>
+  </div>
+</footer>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script src="/config.js"></script>
+<script src="/js/sb.js"></script>
+<script src="/js/shop.js"></script>
+</body>
+</html>

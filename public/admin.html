@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trade Shop Admin – Your Mates Brewing</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://cdn.shopify.com/s/files/1/0454/1949/5576/files/Brand_Full_Colour_Logo_1_2x_bc9bb534-0895-4f04-b314-13a297f864c2.png?width=64">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bayon&family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/css/site.css">
+<style>
+body { background: #FAFAF7; }
+.site-header .wrap { min-height: 70px; }
+.logo img { height: 50px; }
+.atabs { display: flex; gap: 6px; margin: 24px 0 18px; overflow-x: auto; border-bottom: 2px solid var(--black); }
+.atabs a { text-decoration: none; padding: 11px 16px 8px; font: 19px/1 var(--display); text-transform: uppercase; border: 2px solid transparent; border-bottom: 0; border-radius: 8px 8px 0 0; white-space: nowrap; color: var(--muted); margin-bottom: -2px; }
+.atabs a[aria-current="page"] { background: var(--yellow); color: var(--black); border-color: var(--black); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kpi { background: #fff; border: 2px solid var(--black); border-radius: var(--r); padding: 12px 14px; }
+.kpi .k { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.kpi .v { font: 30px/1.1 var(--display); margin-top: 4px; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+.fchip { border: 2px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 13px; font-weight: 700; font-size: 13px; cursor: pointer; }
+.fchip[aria-pressed="true"] { border-color: var(--black); background: var(--yellow); }
+.fchip .c { color: var(--muted); font-weight: 500; margin-left: 4px; }
+.tbl { overflow-x: auto; background: #fff; border: 2px solid var(--black); border-radius: var(--r); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid var(--black); white-space: nowrap; background: #F4F4F0; }
+td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.sub { font-size: 12px; color: var(--muted); }
+.onote { font-size: 12px; margin-top: 5px; padding: 4px 8px; background: #FFFBD1; border-left: 3px solid var(--yellow); border-radius: 3px; max-width: 280px; }
+.acts { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.thumb { width: 44px; height: 44px; border-radius: 6px; border: 1.5px solid var(--black); object-fit: cover; background: var(--card); }
+.toggle { width: 20px; height: 20px; accent-color: var(--black); cursor: pointer; }
+.cell-in { width: 88px; padding: 6px 8px; text-align: right; }
+.row-off td { background: #F6F6F6; color: var(--muted); }
+.row-off .thumb { filter: grayscale(1); opacity: .6; }
+.editrow td { background: #FFFDE8; }
+.eform { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.eform .wide { grid-column: span 2; }
+@media (max-width: 760px) { .eform { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cgrid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .cgrid { grid-template-columns: minmax(0, 1fr); } }
+.clist { display: grid; gap: 6px; max-height: 70vh; overflow: auto; padding: 2px; }
+.citem { text-align: left; background: #fff; border: 2px solid var(--line); border-radius: var(--r); padding: 10px 12px; cursor: pointer; display: grid; gap: 2px; }
+.citem b { font-size: 14px; }
+.citem span { font-size: 12px; color: var(--muted); }
+.citem[aria-pressed="true"] { border-color: var(--black); box-shadow: inset 0 0 0 1px var(--black); background: #FFFDE8; }
+.chead { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 14px; }
+.tierbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; background: #F4F4F0; border-radius: var(--r); margin: 14px 0; }
+.tierbar .btn[aria-pressed="true"] { background: var(--yellow); }
+.custom-tag { font-size: 11px; font-weight: 700; color: #24489B; background: #E3ECFF; border-radius: 999px; padding: 2px 7px; margin-left: 6px; }
+.sgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.sgrid .panel { padding: 16px; }
+.days7 { display: flex; gap: 6px; flex-wrap: wrap; }
+.days7 label { display: flex; align-items: center; gap: 5px; border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 9px; font-size: 13px; cursor: pointer; background: #fff; }
+.days7 input { accent-color: var(--black); }
+.empty { padding: 30px; text-align: center; color: var(--muted); }
+.loading { display: flex; align-items: center; gap: 12px; padding: 60px 0; justify-content: center; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="announce">Trade shop admin</div>
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav"><a href="/">Shop</a></nav>
+    <a class="logo" href="/admin.html" aria-label="Admin home"><img src="https://cdn.shopify.com/s/files/1/0454/1949/5576/files/Brand_Full_Colour_Logo_1_2x_bc9bb534-0895-4f04-b314-13a297f864c2.png?height=120" alt="Your Mates Brewing Co." width="50" height="50"></a>
+    <div class="head-right" id="headRight"></div>
+  </div>
+</header>
+<main class="wrap" id="app" style="padding-bottom:40px"><div class="loading"><span class="spinner"></span>Loading admin…</div></main>
+<div id="toast" class="toast" role="status" hidden></div>
+<script src="/config.js"></script>
+<script src="/js/sb.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>
