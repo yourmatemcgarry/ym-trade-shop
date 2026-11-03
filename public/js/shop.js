@@ -189,7 +189,7 @@
   function viewShop() {
     const p = S.profile;
     if (p.status !== 'active') return `<div class="wrap" style="padding-block:50px"><div class="panel" style="max-width:640px"><h2>Your account is on hold</h2>
-      <p>Give us a call on (07) 5329 4733 or email sales@yourmatesbrewing.com and we'll sort it out.</p></div></div>`;
+      <p>Give us a call on (07) 5329 4733 or email orders@yourmatesbrewing.com and we'll sort it out.</p></div></div>`;
     const head = S.step === 'done' ? '' : `<div class="hello">
         <div><div class="eyebrow">${esc(p.org_type)}</div><h1>G'day, ${esc(p.org_name || p.contact_name || 'mate')}</h1>
         <p>Prices below are your trade prices, GST included.</p></div>
