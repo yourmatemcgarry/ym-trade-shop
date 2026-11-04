@@ -90,6 +90,14 @@
   body.has-mbar { padding-bottom: 76px; }
 }
 
+.bulk { border: 2px solid var(--black); border-radius: var(--r); background: var(--yellow); padding: 14px 16px; margin-bottom: 26px; }
+.bulk.sent { background: #fffde0; font-size: 15px; }
+.bulk-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.bulk-top b { display: block; font: 21px/1.1 var(--display); text-transform: uppercase; }
+.bulk-top span { font-size: 14px; }
+.bulk-form { display: grid; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--black); }
+.bulk-form input, .bulk-form select, .bulk-form textarea { border-color: var(--black); }
+
 /* ---------- Checkout ---------- */
 .choice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 6px 0 18px; }
 @media (max-width: 520px) { .choice { grid-template-columns: minmax(0, 1fr); } }

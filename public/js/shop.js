@@ -36,6 +36,7 @@
     cart: {}, step: 'order', notes: '', age: false,
     f: { method: 'pickup', date: null, slot: null, address_line: '', suburb: '', postcode: '', need_by: '', need_by_time: '', unattended: 'attend', leave_where: '', delivery_notes: '' },
     checkout: null, payState: 'idle', payMsg: '', lastOrder: null, orders: null,
+    bulk: { open: false, sent: false, busy: false, msg: '', frequency: 'monthly', volume: '', message: '' },
   };
   const P = () => Object.fromEntries(S.products.map((p) => [p.id, p]));
   const cartKey = () => 'ymt-cart-' + (S.profile?.id || 'x');
@@ -215,10 +216,36 @@
           : `<button class="btn btn-primary btn-sm add" data-act="qty" data-id="${esc(p.id)}" data-d="1">Add to order</button>`}</div>
       </div></article>`;
   }
+  function bulkBox() {
+    const B = S.bulk, p = S.profile;
+    if (B.sent) return `<section class="bulk sent" id="bulk"><b>Thanks, we've got your enquiry.</b> Someone from our team will be in touch about bulk pricing, usually within a couple of business days.</section>`;
+    const freqs = [['weekly', 'Every week'], ['fortnightly', 'Every fortnight'], ['monthly', 'About once a month'], ['event', 'A large one-off order'], ['other', 'Something else']];
+    return `<section class="bulk" id="bulk">
+      <div class="bulk-top">
+        <div><b>Ordering every month, or buying in bulk?</b>
+          <span>You could qualify for better pricing. Send us a quick enquiry and we'll be in touch.</span></div>
+        ${B.open ? '' : '<button class="btn btn-dark btn-sm" data-act="bulk-open">Ask about bulk pricing</button>'}
+      </div>
+      ${B.open ? `<form id="fBulk" class="bulk-form">
+        <div class="grid2">
+          <label class="f" for="bf">How often do you order?<select id="bf">${freqs.map(([v, t]) => `<option value="${v}" ${B.frequency === v ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
+          <label class="f" for="bp">Best phone number<input id="bp" type="tel" maxlength="20" value="${esc(p.phone)}"></label>
+          <label class="f full" for="bv">Roughly how much per order?<input id="bv" type="text" maxlength="200" required placeholder="e.g. 10 cartons of Larry and a 30L keg" value="${esc(B.volume)}"></label>
+          <label class="f full" for="bm"><span>Anything else? <span class="muted">(optional)</span></span><textarea id="bm" rows="2" maxlength="1500" placeholder="e.g. We run a canteen every Saturday through the season">${esc(B.message)}</textarea></label>
+        </div>
+        ${B.msg ? `<div class="note bad" role="alert">${esc(B.msg)}</div>` : ''}
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary btn-sm" ${B.busy ? 'disabled' : ''}>${B.busy ? '<span class="spinner"></span>' : 'Send enquiry'}</button>
+          <button type="button" class="link" data-act="bulk-close">Cancel</button>
+          <span class="muted small">Goes straight to our team with your account details. No need to email.</span>
+        </div></form>` : ''}
+    </section>`;
+  }
   function stepOrder() {
     const packs = S.products.filter((p) => !p.is_keg), kegs = S.products.filter((p) => p.is_keg);
     if (!S.products.length) return `<div class="panel"><h2>Nothing to order right now</h2><p>Check back soon, or call us on (07) 5329 4733.</p></div>`;
     return `<div class="layout"><div>
+      ${bulkBox()}
       ${packs.length ? `<div class="sec-h"><h2>Cartons</h2><span>${packs.length} on your list</span></div><div class="grid">${packs.map(card).join('')}</div>` : ''}
       ${kegs.length ? `<div class="sec-h"><h2>Kegs</h2><span>Pick up or delivered</span></div><div class="grid">${kegs.map(card).join('')}</div>` : ''}
     </div>${summary()}</div>`;
@@ -485,6 +512,8 @@
       }
       S.busy = false; render(); scrollTo(0, 0);
     }
+    else if (a === 'bulk-open') { S.bulk.open = true; render(); $('#bv')?.focus(); }
+    else if (a === 'bulk-close') { S.bulk.open = false; S.bulk.msg = ''; render(); }
     else if (a === 'new-order') { S.step = 'order'; S.lastOrder = null; render(); scrollTo(0, 0); }
     else if (a === 'reorder') {
       const o = S.orders.find((x) => String(x.id) === b.dataset.id); const map = P(); let skipped = 0;
@@ -516,6 +545,16 @@
   });
 
   document.addEventListener('submit', async (e) => {
+    if (e.target.id === 'fBulk') {
+      e.preventDefault();
+      const B = S.bulk;
+      Object.assign(B, { frequency: $('#bf').value, volume: $('#bv').value.trim(), message: $('#bm').value.trim(), busy: true, msg: '' });
+      const phone = $('#bp').value.trim();
+      render();
+      try { await SB.api('bulk-enquiry', { frequency: B.frequency, volume: B.volume, message: B.message, phone }); B.sent = true; B.open = false; toast('Enquiry sent'); }
+      catch (err) { B.msg = err.message; }
+      B.busy = false; render(); return;
+    }
     const id = e.target.id; if (!['fLogin', 'fSignup', 'fForgot', 'fReset', 'fProfile'].includes(id)) return;
     e.preventDefault();
     // Read every field before re-rendering (re-rendering replaces the form)
